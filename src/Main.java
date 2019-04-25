@@ -1,31 +1,24 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String sourceFile = "Files/RandomText.txt";
-        String targetFile = "Files/TargetFile.txt";
+        // all of Paths's methods are static methods
+        Path sourceFile = Paths.get("Files", "RandomText.txt");
+        Path targetFile = Paths.get("Files", "target.txt");
 
-        try (
-                FileReader fReader = new FileReader(sourceFile);
-                BufferedReader bReader = new BufferedReader(fReader);
-                FileWriter writer = new FileWriter(targetFile)
-
-        ) {
-            while (true) {
-                String line = bReader.readLine();
-                if (line == null) {
-                    break;
-                } else {
-                    writer.write(line + "\n");
-                }
-            }
-            System.out.println("File has successfully copied!");
-
-        } catch (Exception e) {
+        //replace_existing means that if the target file already exists, I want to delete it and
+        // create a new version
+        try {
+            Files.copy(sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Successfully copied file!");
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
