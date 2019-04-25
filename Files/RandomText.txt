@@ -1,0 +1,67 @@
+- In this section of the course, I'm going to describe some practical tasks that most developers need to know how to do, including reading
+and writing files and communicating over the Internet. I'll start with file I/O. The Java class library in Java 8 implements two completely
+separate file I/O systems: the original system that was delivered with the original version of Java back in 1995, and has evolved somewhat
+since then; and a completely new version that was delivered with Java 7.
+
+In this demonstration, I'll talk about techniques that are available in all versions of Java, including Android's implementation because
+the newer libraries aren't available in all versions of Java, including Android's. I'm working in a project named CopyFile, and this project,
+in addition to the source files, has a files folder and there's a file there called loremipsum.txt. I'm going to demonstrate the Java code you'd
+need to make a copy of this file.
+
+Now you can use any file you want, including a file that might be much longer but I'll use this short file just to make things go very quickly.
+I'm starting in an empty Main method. And first I'll declare a couple of strings, one pointing to the existing file and one pointing to the name
+and location of a file that I want to create. I'll declare a string and I'll name it sourceFile. And I'll set its value to files/ and then the
+name of the file, loremipsum.txt.
+
+Make sure that you spell the name of this file correctly. Also notice that I'm using a forward slash even though I'm working on Windows.
+In Java, the forward slash is used as the directory separator on all operating systems. Then I'll declare another string and I'll name this one targetFile.
+And I'll place the file in the same directory, the file subdirectory of this project, but I'll name it target.txt. Next, I'm ready to create a few
+classes that I'll need.
+
+I'm going to be using three classes from the Java class library named FileReader, BufferedReader and FileWriter. I'll start with a try catch block.
+And right after the try keyword, I'll add a pair of parentheses, and this is where I'll declare these objects. I'm using a syntax style
+known as try-with-resources. Whenever you declare objects within the parentheses after the try keyword, that means that these objects implement a
+method named close, or to be more accurate, they implement an interface named AutoCloseable.
+
+All of these objects need to be closed before you finish what you're up to. By instantiating the objects here, I'll allow the Java runtime
+to call the close methods for me. Now within those parentheses, I'll create an instance of the class, FileReader, from the java.io package.
+When I select the class, an import for that class is added. And I'll name it fReader for FileReader. And I'll instantiate it by calling the
+constructor method and I'll pass in the name of the file.
+
+Notice you can pass in a string or an instance of a class named file, but that would be an intermediate step that I don't need. I'll pass in
+sourceFile, and that's the file I'm going to be reading. Now if I were only creating one object, I wouldn't need the semicolon here, but I am
+going to create more than one closable object so I'll add the semicolon and then on the next line, I'll create an instance of a class named BufferedReader.
+ The BufferedReader class has a method named read line.
+
+That'll make it very easy for me to read the file one line at a time. I'll name this one bReader and I'll instantiate it with new BufferedReader,
+and I'll pass my FileReader object into it. Finally, I'll create a FileWriter class and this class will be used to create the target file.
+I'll instantiate it with new FileWriter and I'll pass in targetFile. Before I continue with the rest of the code, I'll come down here
+to the end of the try section and I'll add a catch block.
+
+I'll be very general in the exception handling. I'll just look for an exception object that I'll name e. Notice when I add the catch block,
+all of the error indicators go away on my declaration of the closable objects. So now I'm ready to actually do the work of reading and
+writing the file. Here's the logic I'll use. I'll create a while block and I'll set my condition to true. So that means I'm creating an
+infinite loop, and I'll need to explicitly break out of the infinite loop whenever I want to.
+
+Within the loop, I'll read one line using the BufferedReader. I'll create a string, I'll name it line and I'll get its value with bReader.readLine.
+ if readLine successfully finds text, it'll return that value as a string, otherwise it'll return null. So now I'll do a bit of conditional code
+ to find out whether I got a string I can work with. My condition will be line matches the value of null.
+
+And if it is null, I'll break out of my while loop by calling the break keyword. But then in the else block, I'll take that string that I read
+and I'll write it to the target file with writer.write and then I'll pass in the line and I'll also pass in a line feed. When you call readLine,
+you're only getting the text of the line itself. The line feed that separates the lines is ignored. So I need to put it back in to my final file.
+
+Within my catch block, I'll just add some code to print the stack trace with e.printStackTrace. I'm not expecting any exceptions, but if I do
+get one, I'll get some help understanding what it is. So let's read through the code one more time. I'm using the try-with-resources syntax
+that was introduced in Java 7, and I'm creating three closable objects: a FileReader, a BufferedReader and a FileWriter. Then I'm doing an
+infinite loop and reading one string at a time.
+
+If I get to the end of the file, I'll get a null value back and I'll break out of the loop. Otherwise, I'll write that line to my target
+file. At the end of the loop, I'll just add a little bit of output and I'll say File copied. And I'm ready to test the code. I'll run the
+application and I get the message File copied but more importantly, I see my target file has been created in the file subdirectory.
+And I'll open it and confirm that it looks exactly like my original file.
+
+So again, this bit of code will work in pretty much all versions of Java, with the exception of try-with-resources. The try-with-resources
+syntax was added in a later version of Java. If you working in Android, you might not be able to use it, depending on which version of
+Android you're coding for. And if you're working with an older version of Java, you won't be able to use it either. So instead, you would
+instantiate these objects within the try block and then close them explicitly by calling their close methods before you finish executing your code.
