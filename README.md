@@ -1,6 +1,5 @@
-# Copy Text File
+# Copy Text File (Java 7 and later)
 
-- Java 7 and later
 - Copy text file using 
 - Path sourceFile = new Paths.get("subdirectory", "originalFile.txt");
 - Path targetFile = new Paths.get("subdirectory", "copiedFile.txt"); //Paths's static method get()
